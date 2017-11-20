@@ -268,15 +268,28 @@ class Cnf_Public {
 				                     __( 'Click here to add widgets', 'cnf' ) .
 				                     '</a>',
 			) )
+			->add_field( 'cnf-container-width', array(
+				'type'        => 'dimension',
+				'label'       => __( 'Container Max Width', 'cnf' ),
+				'description' => __( 'Change container Maximum width', 'cnf' ),
+				'default'     => '960px',
+				'output'      => array(
+					array(
+						'element'  => '.cnf-content',
+						'property' => 'max-width'
+					),
+				),
+
+			) )
 			->add_field( 'cnf-container-padding', array(
-				'type'        => 'dimensions',
+				'type'        => 'spacing',
 				'label'       => __( 'Container Padding', 'cnf' ),
 				'description' => __( 'Change container spacing', 'cnf' ),
 				'default'     => array(
-					'padding-top'    => '0px',
-					'padding-bottom' => '0px',
-					'padding-left'   => '20px',
-					'padding-right'  => '20px',
+					'top'    => '0px',
+					'right'  => '20px',
+					'bottom' => '0px',
+					'left'   => '20px',
 				),
 				'output'      => array(
 					array(
