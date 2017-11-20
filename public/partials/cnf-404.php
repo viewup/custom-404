@@ -22,17 +22,19 @@
 </head>
 
 <main class="cnf-wrapper">
-    <section class="cnf-content">
+    <div class="cnf-position">
+        <section class="cnf-content">
 
-        <div class="cnf-text"><?php echo get_theme_mod( 'cnf-content', is_customize_preview() ? __( 'Customize your 404 message and widgets', 'cnf' ) : sprintf( '<h1>%s</h1>', __( '404 - Page not found', 'cnf' ) ) ) ?></div>
+            <div class="cnf-text"><?php echo get_theme_mod( 'cnf-content', is_customize_preview() ? __( 'Customize your 404 message and widgets', 'cnf' ) : sprintf( '<h1>%s</h1>', __( '404 - Page not found', 'cnf' ) ) ) ?></div>
 
-		<?php if ( is_active_sidebar( 'cnf-widgets' ) ) : ?>
-            <aside id="cnf-widgets" class="cnf-widgets widget-area">
-				<?php dynamic_sidebar( 'cnf-widgets' ); ?>
-            </aside><!-- #cnf-widgets -->
-		<?php endif; ?>
+		    <?php if ( is_active_sidebar( 'cnf-widgets' ) ) : ?>
+                <aside id="cnf-widgets" class="cnf-widgets widget-area">
+				    <?php dynamic_sidebar( 'cnf-widgets' ); ?>
+                </aside><!-- #cnf-widgets -->
+		    <?php endif; ?>
 
-    </section>
+        </section>
+    </div>
 </main>
 
 <body <?php body_class(); ?>>

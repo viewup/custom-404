@@ -25,6 +25,12 @@
     overflow: auto;
 }
 
+.cnf-position{
+    width: 100%;
+    max-height: 100%;
+    overflow: auto;
+}
+
 .cnf-content {
     display: block;
     width: 100%;
@@ -33,6 +39,7 @@
     margin-left: auto;
     padding-right: 20px;
     padding-left: 20px;
+    box-sizing: border-box;
 }
 
 body.admin-bar .cnf-wrapper{

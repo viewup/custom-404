@@ -75,7 +75,7 @@ class Cnf_Public {
 
 	public function register_admin_menu() {
 		add_menu_page( __( 'Customize 404 Page', 'cnf' ), __( 'Customize 404 Page', 'cnf' ), 'edit_theme_options', $this->get_customizer_link(),
-			'', 'dashicons-hidden', 3 );
+			'', 'dashicons-hidden' );
 	}
 
 	public function get_customizer_link() {
@@ -267,6 +267,24 @@ class Cnf_Public {
 				                     '<a href="javascript:wp.customize.section( \'sidebar-widgets-cnf-widgets\' ).focus();">' .
 				                     __( 'Click here to add widgets', 'cnf' ) .
 				                     '</a>',
+			) )
+			->add_field( 'cnf-container-padding', array(
+				'type'        => 'dimensions',
+				'label'       => __( 'Container Padding', 'cnf' ),
+				'description' => __( 'Change container spacing', 'cnf' ),
+				'default'     => array(
+					'padding-top'    => '0px',
+					'padding-bottom' => '0px',
+					'padding-left'   => '20px',
+					'padding-right'  => '20px',
+				),
+				'output'      => array(
+					array(
+						'element'  => '.cnf-content',
+						'property' => 'padding'
+					),
+				),
+
 			) )
 			->add_field( 'cnf-custom-css', array(
 				'type'            => 'code',
