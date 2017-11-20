@@ -2,3 +2,45 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+.cnf-wrapper {
+    position: relative;
+    z-index: 0;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    overflow: auto;
+}
+
+.cnf-content {
+    display: block;
+    width: 100%;
+    max-width: 960px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+body.admin-bar .cnf-wrapper{
+    height: calc(100vh - 32px);
+}
+
+@media screen and (max-width: 782px){
+    body.admin-bar .cnf-wrapper{
+        height: calc(100vh - 46px);
+    }
+}

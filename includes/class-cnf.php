@@ -35,7 +35,7 @@ class Cnf {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Cnf_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Cnf_Loader $loader Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -44,7 +44,7 @@ class Cnf {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
+	 * @var      string $plugin_name The string used to uniquely identify this plugin.
 	 */
 	protected $plugin_name;
 
@@ -53,7 +53,7 @@ class Cnf {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
+	 * @var      string $version The current version of the plugin.
 	 */
 	protected $version;
 
@@ -67,18 +67,13 @@ class Cnf {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
-			$this->version = PLUGIN_NAME_VERSION;
-		} else {
-			$this->version = '1.0.0';
-		}
+		$this->version     = defined( 'CUSTOM_404_VERSION' ) ? CUSTOM_404_VERSION : '1.0.0';
 		$this->plugin_name = 'cnf';
 
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-
 	}
 
 	/**
@@ -121,6 +116,12 @@ class Cnf {
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-cnf-public.php';
+
+		/**
+		 * The Kirki manager for this plugin and the kirki dependency injection
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/kirki/class-cnf-kirki.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/kirki/kirki-installer.php';
 
 		$this->loader = new Cnf_Loader();
 
@@ -172,6 +173,7 @@ class Cnf {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( '404_template', $plugin_public, 'get_template', 10, 3 );
 
 	}
 

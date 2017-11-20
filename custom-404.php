@@ -29,6 +29,7 @@
 defined( 'WPINC' ) or die;
 
 define( 'CUSTOM_404_VERSION', '1.0.0' );
+define( 'CUSTOM_404_DIR_PATH', plugin_dir_path( __FILE__ ) );
 
 
 /**
