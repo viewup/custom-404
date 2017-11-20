@@ -67,8 +67,30 @@ class Cnf_Public {
 			? CUSTOM_404_DIR_PATH . 'public/partials/cnf-404.php'
 			: '';
 
+		add_action( 'admin_menu', array( $this, 'register_admin_menu' ) );
 		add_action( 'plugins_loaded', array( $this, 'customizer_setup' ) );
 		add_action( 'widgets_init', array( $this, 'widgets_init' ) );
+		add_action( 'wp_head', array( $this, 'custom_css' ) );
+	}
+
+	public function register_admin_menu() {
+		add_menu_page( __( 'Customize 404 Page', 'cnf' ), __( 'Customize 404 Page', 'cnf' ), 'edit_theme_options', $this->get_customizer_link(),
+			'', 'dashicons-hidden', 3 );
+	}
+
+	public function get_customizer_link() {
+		$url = add_query_arg( array(
+			'url'                => urlencode( get_home_url( null, '/404-page-not-found' ) ),
+			'autofocus[section]' => $this->customizer_section,
+		), 'customize.php' );
+
+		return $url;
+	}
+
+	public function custom_css() {
+		if ( is_customize_preview() || ( is_404() && get_theme_mod( 'cnf-custom-css' ) ) ) {
+			echo sprintf( '<style type="text/css" id="cnf-custom-css">%s</style>', get_theme_mod( 'cnf-custom-css', '' ) );
+		}
 	}
 
 	/**
@@ -167,7 +189,7 @@ class Cnf_Public {
 
 		Cnf_Kirki::add_section( $this->customizer_section, array(
 			'title'       => esc_attr__( '404 Page' ),
-			'description' => esc_attr__( 'Customize 404 Page', 'cnf' ),
+			'description' => esc_attr__( 'Customize your 404 Page', 'cnf' ),
 			'priority'    => 160,
 		) );
 
@@ -226,6 +248,7 @@ class Cnf_Public {
 			->add_field( 'cnf-content', array(
 				'type'            => 'editor',
 				'label'           => __( 'Content', 'cnf' ),
+				'description'     => __( 'Add some custom message on your 404 page.', 'cnf' ),
 				'active_callback' => $cp_enabled,
 				'partial_refresh' => array(
 					'cnf-content' => array(
@@ -240,9 +263,25 @@ class Cnf_Public {
 				'type'            => 'custom',
 				'label'           => __( 'Add Widgets', 'cnf' ),
 				'active_callback' => $cp_enabled,
-				'description'     => '<a href="javascript:wp.customize.section( \'sidebar-widgets-cnf-widgets\' ).focus();">' .
+				'description'     => __( 'Customize your 404 page with widgets.', 'cnf' ) .
+				                     '<a href="javascript:wp.customize.section( \'sidebar-widgets-cnf-widgets\' ).focus();">' .
 				                     __( 'Click here to add widgets', 'cnf' ) .
 				                     '</a>',
+			) )
+			->add_field( 'cnf-custom-css', array(
+				'type'            => 'code',
+				'label'           => __( 'Custom CSS', 'cnf' ),
+				'choices'         => array( 'language' => 'css' ),
+				'priority'        => 1000,
+				'default'         => sprintf( "/*\n%s\n*/\n", __( 'Add your custom 404 page CSS here. ', '_s' ) ),
+				'partial_refresh' => array(
+					'cnf-css-refresh' => array(
+						'selector'        => '#cnf-custom-css',
+						'render_callback' => function () {
+							echo get_theme_mod( 'cnf-custom-css' );
+						},
+					)
+				)
 			) )
 			///
 			///
