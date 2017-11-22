@@ -78,9 +78,13 @@ class Cnf_Public {
 			'', 'dashicons-hidden' );
 	}
 
-	public function get_customizer_link() {
+	public function get_customizer_link( $admin = true ) {
+		$page = get_home_url( null, '/404-page-not-found' );
+		if ( ! $admin ) {
+			return $page;
+		}
 		$url = add_query_arg( array(
-			'url'                => urlencode( get_home_url( null, '/404-page-not-found' ) ),
+			'url'                => urlencode( $page ),
 			'autofocus[section]' => $this->customizer_section,
 		), 'customize.php' );
 
@@ -189,7 +193,7 @@ class Cnf_Public {
 
 		Cnf_Kirki::add_section( $this->customizer_section, array(
 			'title'       => esc_attr__( '404 Page' ),
-			'description' => esc_attr__( 'Customize your 404 Page', 'cnf' ),
+			'description' => esc_attr__( 'Customize your 404 Page.', 'cnf' ),
 			'priority'    => 160,
 		) );
 
@@ -208,6 +212,11 @@ class Cnf_Public {
 		);
 
 		$this
+			->add_field( 'cnf-404-link', array(
+				'type'    => 'custom',
+				'default' => sprintf( '<a class="button cnf-404-button" target="customize-preview-0" href="javascript:wp.customize.previewer.previewUrl( \'%1$s\' )">%2$s</a>',
+					$this->get_customizer_link( false ), __( 'Go to 404 page.', 'fa2' ) ),
+			) )
 			->add_field( 'cnf-custom-page', array(
 				'type'            => 'checkbox',
 				'label'           => __( 'Custom 404 Page', 'cnf' ),
@@ -263,17 +272,17 @@ class Cnf_Public {
 				'type'            => 'custom',
 				'label'           => __( 'Add Widgets', 'cnf' ),
 				'active_callback' => $cp_enabled,
-				'description'     => __( 'Customize your 404 page with widgets.', 'cnf' ) .
-				                     '<a href="javascript:wp.customize.section( \'sidebar-widgets-cnf-widgets\' ).focus();">' .
-				                     __( 'Click here to add widgets', 'cnf' ) .
-				                     '</a>',
+				'description'     => __( 'Customize your 404 page with widgets.', 'cnf' ),
+				'default'         => sprintf( '<a class="button add-new-widget cnf-add-widgets" href="javascript:wp.customize.section( \'sidebar-widgets-cnf-widgets\' ).focus();">%s</a>',
+					__( 'Add a Widget', 'cnf' ) ),
 			) )
 			->add_field( 'cnf-container-width', array(
-				'type'        => 'dimension',
-				'label'       => __( 'Container Max Width', 'cnf' ),
-				'description' => __( 'Change container Maximum width', 'cnf' ),
-				'default'     => '960px',
-				'output'      => array(
+				'type'            => 'dimension',
+				'label'           => __( 'Container Max Width', 'cnf' ),
+				'description'     => __( 'Change container Maximum width', 'cnf' ),
+				'default'         => '960px',
+				'active_callback' => $cp_enabled,
+				'output'          => array(
 					array(
 						'element'  => '.cnf-content',
 						'property' => 'max-width'
@@ -282,16 +291,17 @@ class Cnf_Public {
 
 			) )
 			->add_field( 'cnf-container-padding', array(
-				'type'        => 'spacing',
-				'label'       => __( 'Container Padding', 'cnf' ),
-				'description' => __( 'Change container spacing', 'cnf' ),
-				'default'     => array(
+				'type'            => 'spacing',
+				'label'           => __( 'Container Padding', 'cnf' ),
+				'description'     => __( 'Change container spacing', 'cnf' ),
+				'active_callback' => $cp_enabled,
+				'default'         => array(
 					'top'    => '0px',
 					'right'  => '20px',
 					'bottom' => '0px',
 					'left'   => '20px',
 				),
-				'output'      => array(
+				'output'          => array(
 					array(
 						'element'  => '.cnf-content',
 						'property' => 'padding'
@@ -315,6 +325,7 @@ class Cnf_Public {
 				)
 			) )
 			///
+			/// End adding fields
 			///
 		;
 	}
