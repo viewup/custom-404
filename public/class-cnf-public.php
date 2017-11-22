@@ -214,7 +214,7 @@ class Cnf_Public {
 		$this
 			->add_field( 'cnf-404-link', array(
 				'type'    => 'custom',
-				'default' => sprintf( '<a class="button cnf-404-button" target="customize-preview-0" href="javascript:wp.customize.previewer.previewUrl( \'%1$s\' )">%2$s</a>',
+				'default' => sprintf( '<a class="button cnf-404-button" href="javascript:wp.customize.previewer.previewUrl( \'%1$s\' )">%2$s</a>',
 					$this->get_customizer_link( false ), __( 'Go to 404 page.', 'fa2' ) ),
 			) )
 			->add_field( 'cnf-custom-page', array(
