@@ -15,4 +15,9 @@ You can customize an 404 page for each of your themes, simply as customize your 
 ## Installation
 
 Custom 404 uses Kirki Toolkit plugin to allow better customization.
-You will be prompted to install it when you use Custom 404 for the first time.
+You will be prompted to install it when you use the plugin for the first time.
+
+## Development
+
+The plugin is developed on GitHub. Pull requests are welcome.
+Check the Develop Branch for latest version.
